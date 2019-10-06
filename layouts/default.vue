@@ -1,20 +1,14 @@
 <template>
   <v-app>
     <v-content>
-      <v-toolbar>
-        <v-toolbar-title>OMDB Search</v-toolbar-title>
-
-        <div class="flex-grow-1"></div>
-
-        <v-toolbar-items>
-          <v-text-field
-            v-model="movieName"
-            :suffix="movieData && movieData.Error ? 'not found!' : null"
-            label="Search a movie"
-          ></v-text-field>
-        </v-toolbar-items>
-        <v-btn color="primary" @click="searchMovie">Search</v-btn>
-      </v-toolbar>
+      <div class="headerbar">
+        <div class="col"><h1 class="headerbar--title">OMDb Search</h1></div>
+        <div class="col">
+          <span>Search a movie </span
+          ><input v-model="movieName" class="search-movie" type="text" />
+          <custom-button :on-click="searchMovie" text="Search"></custom-button>
+        </div>
+      </div>
       <v-container>
         <nuxt />
       </v-container>
@@ -24,7 +18,11 @@
 
 <script>
 import { mapState } from 'vuex'
+import CustomButton from '@/components/button'
 export default {
+  components: {
+    CustomButton
+  },
   data() {
     return {
       movieName: null
@@ -34,11 +32,37 @@ export default {
     ...mapState(['movieData'])
   },
   methods: {
-    searchMovie() {
+    async searchMovie() {
       if (this.movieName) {
-        this.$store.dispatch('retrieveMovieData', this.movieName)
+        await this.$store.dispatch('retrieveMovieData', this.movieName)
+        if (this.movieData.Error) {
+          this.movieName = this.movieName + ' Not found'
+        }
       }
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.headerbar {
+  display: flex;
+  contain: layout;
+  background-color: white;
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+    0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+}
+
+.headerbar--title {
+  font-weight: 500;
+}
+
+.col {
+  flex: 1;
+  text-align: center;
+}
+
+input.search-movie {
+  border-bottom: 1px solid lightgrey;
+}
+</style>

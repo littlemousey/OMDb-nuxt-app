@@ -22,20 +22,18 @@
     <v-divider class="mx-4"></v-divider>
     <v-card-actions>
       <v-card-text>{{ year }}</v-card-text>
-      <v-btn
-        v-if="!movieDetails"
-        color="primary"
-        depressed
-        @click="getMovieDetails"
-        >Details</v-btn
-      >
+      <custom-button :on-click="getMovieDetails" text="Details"></custom-button>
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
+import CustomButton from '@/components/button'
 export default {
   name: 'MovieCard',
+  components: {
+    CustomButton
+  },
   props: {
     title: {
       type: String,
