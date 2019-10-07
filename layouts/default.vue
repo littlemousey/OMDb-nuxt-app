@@ -5,11 +5,16 @@
         <div class="col"><h1 class="headerbar--title">OMDb Search</h1></div>
         <div class="col">
           <span>Search a movie </span
-          ><input v-model="movieName" class="search-movie" type="text" />
+          ><input
+            v-model="movieName"
+            class="search-movie"
+            type="text"
+            @keyup.enter="searchMovie"
+          />
           <custom-button :on-click="searchMovie" text="Search"></custom-button>
         </div>
       </div>
-      <v-container>
+      <v-container class="main-wrapper">
         <nuxt />
       </v-container>
     </v-content>
@@ -45,6 +50,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.main-wrapper {
+  max-width: 1300px;
+}
 .headerbar {
   display: flex;
   contain: layout;

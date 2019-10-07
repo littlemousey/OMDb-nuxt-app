@@ -13,13 +13,18 @@
     <div v-if="movieData">
       <v-row>
         <template v-for="movie of movieData.Search">
-          <v-col :key="movie.imdbID" cols="12" sm="6">
+          <v-col
+            :key="movie.imdbID"
+            cols="12"
+            sm="12"
+            :md="fullScreenCard === movie.imdbID ? '12' : '6'"
+          >
             <movieCard
               :id="movie.imdbID"
-              class="pa-2"
               :title="movie.Title"
               :poster="movie.Poster"
               :year="movie.Year"
+              @passMoviecardID="setMoviecardID"
             />
           </v-col>
         </template>
@@ -39,7 +44,17 @@ export default {
     movieCard,
     alert
   },
-  computed: mapState(['movieData'])
+  data() {
+    return {
+      fullScreenCard: null
+    }
+  },
+  computed: mapState(['movieData']),
+  methods: {
+    setMoviecardID(id) {
+      this.fullScreenCard = id
+    }
+  }
 }
 </script>
 
