@@ -74,7 +74,7 @@ export default {
   methods: {
     async getMovieDetails() {
       this.movieDetails = await this.$axios.$get(
-        `http://www.omdbapi.com/?i=${this.id}&apikey=16360874`
+        `https://www.omdbapi.com/?i=${this.id}&apikey=16360874`
       )
       this.updateUIDataForParent(this.id)
     },
